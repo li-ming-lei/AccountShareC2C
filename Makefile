@@ -4,6 +4,8 @@ PKG_LIST := $(shell go mod tidy && go list ${PKG}/...)
 BUS_PKG_LIST := $(shell go mod tidy && go list ${PKG}/... | grep -v stub_test)
 GO_FILES := $(shell find . -name '*.go' | grep -v _test.go)
 
+export GO111MODULE=on
+export GOPROXY="https://goproxy.cn,direct"
 .DEFAULT_GOAL := default
 .PHONY: all
 
@@ -43,7 +45,7 @@ race: dep ## Run data race detector
 build: dep fmt ## Build frpc project
 	@echo "go build..."
 	@CGO_ENABLED=1 go build -v -buildmode=default -o bin/${PROJECT_NAME} cmd/main.go
-#	@CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -v -gcflags=all="-N -l" -o bin/${PROJECT_NAME} cmd/main.go
+	#@CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -v -gcflags=all="-N -l" -o bin/${PROJECT_NAME} cmd/main.go
 	@chmod +x bin/${PROJECT_NAME}
 
 build-dev: dep fmt ## Build frpc project
