@@ -21,6 +21,8 @@ func main() {
 	router.POST("/v1/listforsells", controllers.ListForSells)
 	router.DELETE("/v1/forsell", controllers.DeleteForSell)
 
+	router.POST("/v1/get-user", controllers.GetUser)
+
 	router.Run(":8000")
 }
 
